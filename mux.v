@@ -1,10 +1,10 @@
-module mux(
-	input sel_,
-	input sig_1_,
-	input sig_0_,
-	output mux_sig_
+module mux #(parameter SIZE = 8)(
+	input sel,
+	input [SIZE-1:0] sig_1,
+	input [SIZE-1:0] sig_0,
+	output [SIZE-1:0] mux_sig
 );
 
-	assign mux_sig_ = sel_ ? sig_1_ : sig_0_;
+	assign mux_sig = sel ? sig_1 : sig_0;
 
 endmodule

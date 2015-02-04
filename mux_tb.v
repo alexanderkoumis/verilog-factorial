@@ -10,10 +10,10 @@ module mux_tb();
     reg error;
 
     mux mux(
-        .sel_(sel),
-        .sig_1_(sig_1),
-        .sig_0_(sig_0),
-        .mux_sig_(mux_sig)
+        .sel(sel),
+        .sig_1(sig_1),
+        .sig_0(sig_0),
+        .mux_sig(mux_sig)
     );
 
     initial begin

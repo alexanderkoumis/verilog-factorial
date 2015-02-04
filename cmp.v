@@ -1,9 +1,9 @@
 module cmp #(parameter SIZE = 8) (
-	input  [SIZE-1:0] a_,
-	input  [SIZE-1:0] b_,
-	output gt_
+		input  [SIZE-1:0] a,
+		input  [SIZE-1:0] b,
+		output gt
 );
 
-	assign gt_ = a_ > b_;
+	assign gt = a > b;
 
 endmodule

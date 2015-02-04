@@ -7,10 +7,10 @@ module cmp_tb();
     reg [7:0] b;
     wire gt;
 
-    cmp #(.SIZE_(SIZE)) cmp(
-        .a_(a),
-        .b_(b),
-        .gt_(gt)
+    cmp #(.SIZE(SIZE)) cmp(
+        .a(a),
+        .b(b),
+        .gt(gt)
     );
 
     initial begin

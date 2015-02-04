@@ -1,21 +1,21 @@
-module cnt #(parameter SIZE_ = 8) (
-    input clk_,
-    input en_,
-    input load_cnt_,
-    input [SIZE_-1:0] d_,
-    output [SIZE_-1:0] q_
+module cnt #(parameter SIZE = 8) (
+        input clk,
+        input en,
+        input load_cnt,
+        input [SIZE-1:0] d,
+        output [SIZE-1:0] q
 );
 
-    reg [SIZE_-1:0] mem_;
+    reg [SIZE-1:0] mem;
 
-    assign q_ = mem_;
+    assign q = mem;
 
-    always @ (posedge clk_) begin
-        if (en_) begin
-            if (load_cnt_) begin
-                mem_ <= d_;
+    always @ (posedge clk) begin
+        if (en) begin
+            if (load_cnt) begin
+                mem <= d;
             end else begin
-                mem_ <= mem_ + 1;
+                mem <= mem + 1;
             end
         end
     end    

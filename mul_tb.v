@@ -7,10 +7,10 @@ module mul_tb();
     reg [7:0] y;
     wire [7:0] z;
 
-    mul #(.SIZE_(SIZE)) mul(
-        .x_(x),
-        .y_(y),
-        .z_(z)
+    mul #(.SIZE(SIZE)) mul(
+        .x(x),
+        .y(y),
+        .z(z)
     );
 
     initial begin

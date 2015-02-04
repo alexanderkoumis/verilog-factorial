@@ -1,9 +1,9 @@
-module mul #(parameter SIZE_ = 8) (
-	input  [7:0] x_,
-	input  [7:0] y_,
-	output [7:0] z_
+module mul #(parameter SIZE = 8) (
+        input  [7:0] x,
+        input  [7:0] y,
+        output [7:0] z
 );
 
-	assign z_ = x_ * y_;
+    assign z = x * y;
 
 endmodule

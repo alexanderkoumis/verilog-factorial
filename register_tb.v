@@ -9,11 +9,11 @@ module register_tb();
 
     reg error;
 
-    register #(.SIZE_(SIZE)) register(
-        .clk_(clk),
-        .load_reg_(load_reg),
-        .d_(d),
-        .q_(q)
+    register #(.SIZE(SIZE)) register(
+        .clk(clk),
+        .load_reg(load_reg),
+        .d(d),
+        .q(q)
     );
 
     initial begin

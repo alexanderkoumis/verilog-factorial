@@ -1,21 +1,21 @@
-module register #(parameter SIZE_ = 8) (
-    input clk_,
-    input load_reg_,
-    input [SIZE_-1:0] d_,
-    output [SIZE_-1:0] q_
+module register #(parameter SIZE = 8) (
+    input clk,
+    input load_reg,
+    input [SIZE-1:0] d,
+    output [SIZE-1:0] q
 );
 
-    reg [SIZE_-1:0] mem_;
+    reg [SIZE-1:0] mem;
 
-    assign q_ = mem_;
+    assign q = mem;
 
     initial begin
-        mem_ = 0;
+        mem = 0;
     end
 
-    always @ (posedge clk_) begin
-        if (load_reg_) begin
-            mem_ <= d_;
+    always @ (posedge clk) begin
+        if (load_reg) begin
+            mem <= d;
         end
     end
 

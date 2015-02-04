@@ -10,7 +10,7 @@ module cnt_tb();
 
     reg error;
 
-    cnt #(.SIZE_(SIZE)) cnt (
+    cnt #(.SIZE(SIZE)) cnt (
         .clk_(clk),
         .en_(en),
         .load_cnt_(load_cnt),
