@@ -1,56 +1,80 @@
 module dp #(parameter SIZE = 8) (
         input clk,
         input [SIZE-1:0] n,
-        input cnt_load,
-        input cnt_en,
-        input reg_sel,
-        input reg_load,
+        input init,
+        input done,
         output proceed,
         output [SIZE-1:0] result
 );
-    wire [SIZE-1:0] cnt_q;
-    wire [SIZE-1:0] reg_q;
+
+    wire [SIZE-1:0] mul_x;
+    wire [SIZE-1:0] mul_y;
     wire [SIZE-1:0] mul_z;
-    wire [SIZE-1:0] mux_sig;
+    wire [SIZE-1:0] cmp_a;
+    wire [SIZE-1:0] prod_d;
+    wire gt;
 
-    assign result = proceed ? 0 : reg_q;
+    reg [SIZE-1:0] last_result;
+    reg [SIZE-1:0] one;
+    reg proceed;
+    reg down_wait;
 
-    cmp #(.SIZE(SIZE)) cmp(
-        .a(n),
-        .b(cnt_q),
-        .gt(proceed)
+    assign result = done ? last_result : 0;
+
+    mux #(.SIZE(SIZE)) reg_mux (
+        .sel(init),
+        .sig_1(one),
+        .sig_0(mul_z),
+        .mux_sig(prod_d)
+    );
+
+    mux #(.SIZE(SIZE)) cmp_mux (
+        .sel(init),
+        .sig_1(n),
+        .sig_0(mul_y),
+        .mux_sig(cmp_a)
+    );
+
+    register #(.SIZE(SIZE)) product (
+        .clk(clk),
+        .load_reg(1'b1),
+        .d(prod_d),
+        .q(mul_x)
+    );
+
+    cmp #(.SIZE(SIZE)) cmp (
+        .a(cmp_a),
+        .b(one),
+        .gt(gt)
     );
 
     cnt #(.SIZE(SIZE)) cnt (
         .clk(clk),
-        .en(cnt_en),
-        .load_cnt(cnt_load),
-        .d(8'b1),
-        .q(cnt_q)
+        .en(1'b1),
+        .load_cnt(init),
+        .d(n),
+        .q(mul_y)
     );
 
-    mul #(.SIZE(SIZE)) mul(
-        .x(cnt_q),
-        .y(reg_q),
+    mul #(.SIZE(SIZE)) mul (
+        .x(mul_x),
+        .y(mul_y),
         .z(mul_z)
     );
 
-    mux #(.SIZE(SIZE)) mux1(
-        .sel(reg_sel),
-        .sig_1(8'b1),
-        .sig_0(mul_z),
-        .mux_sig(mux_sig)
-    );
+    initial begin
+        one = 1;
+        down_wait = 0;
+    end
 
-    register #(.SIZE(SIZE)) register(
-        .clk(clk),
-        .load_reg(reg_load),
-        .d(mux_sig),
-        .q(reg_q)
-    );
-
-    always @(clk) begin
-        $monitor("cnt_q: %d", cnt_q);
+    always @ (posedge clk) begin
+        proceed <= gt;
+        if (!proceed && !down_wait) begin
+            last_result <= mul_x;
+            down_wait <= 1;
+        end else if (done) begin
+            down_wait <= 0;
+        end
     end
 
 endmodule

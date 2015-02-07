@@ -1,37 +1,31 @@
 module factorial_top #(parameter SIZE = 8) (
         input clk,
-    	input go,
+        input go,
         input [SIZE-1:0] n,
         output [2:0] curr_state,
         output done,
-        output [SIZE-1:0] result
+        output [SIZE-1:0] result,
+        output proceed
 );
 
+    wire init;
     wire proceed;
-    wire cnt_load;
-    wire cnt_en;
-    wire reg_sel;
-    wire reg_load;
-    
-    cu cu(
+    wire done;
+
+    cu #(.SIZE(SIZE)) cu (
         .clk(clk),
         .go(go),
         .proceed(proceed),
-        .cnt_load(cnt_load),
-        .cnt_en(cnt_en),
-        .reg_sel(reg_sel),
-        .reg_load(reg_load),
         .curr_state(curr_state),
+        .init(init),
         .done(done)
     );
 
     dp #(.SIZE(SIZE)) dp (
         .clk(clk),
         .n(n),
-        .cnt_load(cnt_load),
-        .cnt_en(cnt_en),
-        .reg_sel(reg_sel),
-        .reg_load(reg_load),
+        .init(init),
+        .done(done),
         .proceed(proceed),
         .result(result)
     );

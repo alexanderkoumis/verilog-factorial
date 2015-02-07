@@ -15,9 +15,9 @@ module cnt #(parameter SIZE = 8) (
             if (load_cnt) begin
                 mem <= d;
             end else begin
-                mem <= mem + 1;
+                mem <= mem - 1;
             end
         end
-    end    
+    end
 
 endmodule
