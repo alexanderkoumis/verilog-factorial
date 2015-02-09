@@ -10,6 +10,7 @@ module factorial_tb();
     wire [2:0] curr_state;
     wire done;    
     wire [SIZE-1:0] result;
+    wire [31:0] bcdresult;
 
     integer i;
 
@@ -19,17 +20,21 @@ module factorial_tb();
         .n(n),
         .curr_state(curr_state),
         .done(done),
-        .result(result),
-        .proceed(proceed)
+        .result(result)
+    );
+
+    bcd bcd(
+        .binary(result),
+        .bcd_out(bcdresult)
     );
 
     initial begin
         $dumpfile("factorial_tb.lxt2");
         $dumpvars(0,factorial_tb);
         
-        $display("clk\tgo\tcs\tproceed\tdone\tresult");
-        $monitor("%b\t%b\t%d\t%b\t%b\t%d",
-            clk, go, curr_state, proceed, done, result);
+        $display("clk\tgo\tcs\tdone\tresult\t");
+        $monitor("%b\t%b\t%d\t%b\t%d\t%b",
+            clk, go, curr_state, done, result, bcdresult);
         
         clk = 0;
         go = 1;

@@ -4,13 +4,10 @@ module factorial_top #(parameter SIZE = 8) (
         input [SIZE-1:0] n,
         output [2:0] curr_state,
         output done,
-        output [SIZE-1:0] result,
-        output proceed
+        output [SIZE-1:0] result
 );
 
     wire init;
-    wire proceed;
-    wire done;
 
     cu #(.SIZE(SIZE)) cu (
         .clk(clk),
@@ -29,5 +26,6 @@ module factorial_top #(parameter SIZE = 8) (
         .proceed(proceed),
         .result(result)
     );
+
 
 endmodule

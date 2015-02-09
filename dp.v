@@ -3,7 +3,7 @@ module dp #(parameter SIZE = 8) (
         input [SIZE-1:0] n,
         input init,
         input done,
-        output proceed,
+        output reg proceed,
         output [SIZE-1:0] result
 );
 
@@ -15,15 +15,14 @@ module dp #(parameter SIZE = 8) (
     wire gt;
 
     reg [SIZE-1:0] last_result;
-    reg [SIZE-1:0] one;
-    reg proceed;
     reg down_wait;
 
-    assign result = done ? last_result : 0;
-
+    // assign result = done ? last_result : 8'b0;
+    assign result = last_result;
+    
     mux #(.SIZE(SIZE)) reg_mux (
         .sel(init),
-        .sig_1(one),
+        .sig_1(8'b1),
         .sig_0(mul_z),
         .mux_sig(prod_d)
     );
@@ -44,7 +43,7 @@ module dp #(parameter SIZE = 8) (
 
     cmp #(.SIZE(SIZE)) cmp (
         .a(cmp_a),
-        .b(one),
+        .b(8'b1),
         .gt(gt)
     );
 
@@ -62,8 +61,8 @@ module dp #(parameter SIZE = 8) (
         .z(mul_z)
     );
 
+	
     initial begin
-        one = 1;
         down_wait = 0;
     end
 

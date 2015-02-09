@@ -10,12 +10,14 @@ module register #(parameter SIZE = 8) (
     assign q = mem;
 
     initial begin
-        mem = 0;
+        mem <= 0;
     end
 
     always @ (posedge clk) begin
         if (load_reg) begin
             mem <= d;
+        end else begin
+            mem <= mem;
         end
     end
 
