@@ -1,8 +1,8 @@
 module register #(parameter SIZE = 8) (
-    input clk,
-    input load_reg,
-    input [SIZE-1:0] d,
-    output [SIZE-1:0] q
+        input clk,
+        input load_reg,
+        input [SIZE-1:0] d,
+        output [SIZE-1:0] q
 );
 
     reg [SIZE-1:0] mem;
